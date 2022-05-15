@@ -16,5 +16,10 @@
         <li>Your controller at <code><a href="{{ '/var/www/php_study/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
         <li>Your template at <code><a href="{{ '/var/www/php_study/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
     </ul>
+
+    {#foreach($products as $product)#}
+    {% for product in products %}
+        <a href="{{ path('show_product', {'id': product.id}) }}">{{ product.name }}</a><br> {# echo product->name #}
+    {% endfor %}
 </div>
 {% endblock %}
