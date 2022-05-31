@@ -3,23 +3,29 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class="container-fluid">
+        <div class="row">
+            {% for product in products %}
+            <div class="col-3 mt-3">
+                <div class="card" style="width: 18rem;">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.description }}</p>
+                        <a href="javascript:void(0)" onclick="funcName()" class="btn btn-primary buy-click" data-id="{{ product.id }}">Купить</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/php_study/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/php_study/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
-
-    {#foreach($products as $product)#}
-    {% for product in products %}
-        <a href="{{ path('show_product', {'id': product.id}) }}">{{ product.name }}</a><br> {# echo product->name #}
-    {% endfor %}
-</div>
+    <script>
+        document.querySelectorAll('.buy-click').forEach(function (item) {
+            item.addEventListener('click', function () {
+                console.log('click');
+            });
+        });
+    </script>
 {% endblock %}
