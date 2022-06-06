@@ -13,7 +13,10 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ product.name }}</h5>
                         <p class="card-text">{{ product.description }}</p>
-                        <a href="javascript:void(0)" onclick="funcName()" class="btn btn-primary buy-click" data-id="{{ product.id }}">Купить</a>
+                        <a href="javascript:void(0)" onclick="buy(this)" class="btn btn-primary buy-click" data-id="{{ product.id }}">Купить</a>
+                        <div class="d-none" style="display: flex">
+                            <a class="pointer" onclick="minus(this)">-</a><div>0</div><a class="pointer">+</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -22,10 +25,29 @@
     </div>
 
     <script>
-        document.querySelectorAll('.buy-click').forEach(function (item) {
-            item.addEventListener('click', function () {
-                console.log('click');
-            });
-        });
+        //querySelector('')
+        const buy = (_that) => {
+            let localCart  = localStorage.getItem('cart');
+            if (localCart) {
+                localCart = localCart.split(',');
+                localCart.push(_that.getAttribute('data-id'));
+                localCart = [...new Set(localCart)];
+                localStorage.setItem('cart', localCart);
+            } else {
+                localStorage.setItem('cart', [_that.getAttribute('data-id')]);
+            }
+            _that.nextSibling.nextElementSibling.classList.remove('d-none');
+            _that.nextSibling.nextElementSibling.querySelector('div').innerHTML = '1';
+            _that.classList.add('d-none');
+        }
+
+        const minus = (_that) => {
+            console.log(_that);
+        }
     </script>
+    <style>
+        .pointer {
+            cursor: pointer;
+        }
+    </style>
 {% endblock %}

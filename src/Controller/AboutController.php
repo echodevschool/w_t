@@ -23,7 +23,7 @@ class AboutController extends AbstractController
     {
         $aboutUs = $systemInformationRepository->findAll();
 
-        return $this->render(':about:about.html.twig', [
+        return $this->render('about/about.html.twig', [
             'controller_name' => 'AboutController',
             'about' => $aboutUs
         ]);

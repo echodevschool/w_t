@@ -3,5 +3,21 @@
 {% block body  %}
     <h1>вонючие свечки от гали</h1>
 
-    {{ form(form) }}
+{#    {{ form(form) }}#}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let formData = new FormData();
+            formData.set('id', localStorage.getItem('cart'));
+            fetch('/cart/form', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+                });
+        });
+    </script>
 {% endblock body %}
