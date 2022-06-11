@@ -15,7 +15,13 @@
                         <p class="card-text">{{ product.description }}</p>
                         <a href="javascript:void(0)" onclick="buy(this)" class="btn btn-primary buy-click" data-id="{{ product.id }}">Купить</a>
                         <div class="d-none" style="display: flex">
-                            <a class="pointer" onclick="minus(this)"><button class="btn-hover">-</button></a><div><h3 id="counter-label">0</h3></div><a class="pointer"><button class="btn-hover">+</button></a>
+                            <a class="pointer">
+                                <button data-id="{{ product.id }}" onclick="minus(this)" class="btn-hover">-</button>
+                            </a>
+                            <input data-id="{{ product.id }}" oninput="onInput(this)" type="number" value="0">
+                            <a class="pointer">
+                                <button data-id="{{ product.id }}" onclick="plus(this)" class="btn-hover">+</button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -25,26 +31,64 @@
     </div>
 
     <script>
-        //querySelector('')
+        document.addEventListener('DOMContentLoaded', function(){
+            let currentCart = JSON.parse(localStorage.getItem('cart'));
+            document.querySelectorAll('.buy-click').forEach((item) => {
+                if(currentCart[item.getAttribute('data-id')]) {
+                    item.classList.add('d-none');
+                    item.nextSibling.nextElementSibling.classList.remove('d-none');
+                    item.nextSibling.nextElementSibling.querySelector('input').value = currentCart[item.getAttribute('data-id')];
+                }
+            });
+        });
+        console.log('start2');
         const buy = (_that) => {
             let localCart  = localStorage.getItem('cart');
             if (localCart) {
-                localCart = localCart.split(',');
-                localCart.push(_that.getAttribute('data-id'));
-                localCart = [...new Set(localCart)];
-                localStorage.setItem('cart', localCart);
+                localCart = JSON.parse(localCart);
+                localCart[_that.getAttribute('data-id')] = 1;
             } else {
-                localStorage.setItem('cart', [_that.getAttribute('data-id')]);
+                localCart = {
+                    [_that.getAttribute('data-id')]: 1
+                };
             }
+            localStorage.setItem('cart', JSON.stringify(localCart));
             _that.nextSibling.nextElementSibling.classList.remove('d-none');
-            _that.nextSibling.nextElementSibling.querySelector('div').innerHTML = '1';
+            _that.nextSibling.nextElementSibling.querySelector('input').value = '1';
             _that.classList.add('d-none');
         }
 
         const minus = (_that) => {
-            console.log(_that);
+            let localCart  = JSON.parse(localStorage.getItem('cart'));
+            if (localCart[_that.getAttribute('data-id')] === 1) {
+                delete localCart[_that.getAttribute('data-id')];
+                _that.parentNode.parentNode.classList.add('d-none');
+                _that.parentNode.parentNode.previousElementSibling.classList.remove('d-none');
+            } else {
+                localCart[_that.getAttribute('data-id')] = localCart[_that.getAttribute('data-id')] - 1;
+                _that.parentNode.nextElementSibling.value = localCart[_that.getAttribute('data-id')];
+            }
+            localStorage.setItem('cart', JSON.stringify(localCart));
         }
 
+        const plus = (_that) => {
+            let localCart  = JSON.parse(localStorage.getItem('cart'));
+            localCart[_that.getAttribute('data-id')] = localCart[_that.getAttribute('data-id')] + 1;
+            localStorage.setItem('cart', JSON.stringify(localCart));
+            _that.parentNode.previousElementSibling.value = localCart[_that.getAttribute('data-id')];
+        };
+
+        const onInput = (_that) => {
+            let localCart  = JSON.parse(localStorage.getItem('cart'));
+            if (_that.value === 0) {
+                delete localCart[_that.getAttribute('data-id')];
+                _that.parentNode.classList.add('d-none');
+                _that.parentNode.previousElementSibling.classList.remove('d-none');
+            } else {
+                localCart[_that.getAttribute('data-id')] = Number(_that.value);
+            }
+            localStorage.setItem('cart', JSON.stringify(localCart));
+        }
 
     </script>
     <style>
