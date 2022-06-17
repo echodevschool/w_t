@@ -4,12 +4,14 @@
 namespace App\Controller;
 
 use App\Entity\Order;
+use App\Entity\OrderProduct;
 use App\Entity\Product;
 use App\Form\CartType;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -39,15 +41,25 @@ class CartController extends AbstractController
     {
         //$request->query->get('id') // $_GET['id']
         //$request->request->get('id') // $_POST['id']
-        $stringIds = $request->request->get('id');
-        if ($stringIds !== null) {
-            $ids = explode(',', $stringIds);
-            $data = $productRepository->findBy(['id' => $ids]);
-//            $data = $entityManager->getRepository(Product::class)
-//                ->createQueryBuilder('o')
-//                ->where('o.id in (:ids)')->setParameter('ids', $ids)
-//                ->getQuery()
-//                ->getResult();
+        $cart = $request->request->get('cart');
+        if ($cart !== null) {
+            $cart = json_decode($cart, true);
+            $order = new Order();
+            $sum = 0;
+            foreach ($cart as $productId => $count) {
+                $product = $productRepository->find($productId);
+                $sum += $product->getPrice();
+                $orderProduct = new OrderProduct();
+                $orderProduct->setOrderId($order)
+                    ->setProduct($product)
+                    ->setCount($count);
+                $order->addOrderProduct($orderProduct);
+            }
+            $form = $this->createForm(CartType::class, $order);
+            return $this->render('cart/cart_form.html.twig', [
+                'form' => $form->createView(),
+                'sum' => $sum
+            ]);
         }
     }
 

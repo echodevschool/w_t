@@ -5,7 +5,9 @@ namespace App\Form;
 
 
 use App\Entity\Order;
+use App\Entity\OrderProduct;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -17,16 +19,16 @@ class CartType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, [
-                'label' => 'Название',
-                'required' => true
-                ])
-            ->add('productId', IntegerType::class,[
-                'label' => 'Артикул',
-                'required' => true
+            ->add('orderProducts', CollectionType::class, [
+                'entry_type' => OrderProductType::class,
+                'entry_options' => ['label' => false],
+                'attr' => [
+                    'class' => 'd-none'
+                ],
+                'label' => false
             ])
-            ->add('submit', SubmitType::class,[
-                'label' => 'Добавить'
+            ->add('submit', SubmitType::class, [
+                'label' => 'Заказать'
             ])
             ;
     }
