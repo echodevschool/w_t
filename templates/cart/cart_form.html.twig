@@ -1,1 +1,33 @@
-{{ form(form) }}
+{{ form_start(form) }}
+<div class="Header">
+    <h3 class="Heading">Корзина</h3>
+    <h5 class="Action" onclick="removeAll()">Удалить все</h5>
+</div>
+{% for product in form.orderProducts %}
+    <div class="Cart-Items">
+        <div class="about">
+            <h1 class="title">{{ form_label(product.product.name, product.product.name.vars.value) }}</h1>
+            <h3 class="subtitle">{{ form_label(product.product.size, product.product.size.vars.value) }} мл.</h3>
+        </div>
+        <div class="counter">
+            <div class="btn" onclick="minus(this)" data-id="{{ product.product.id.vars.value }}">-</div>
+            <div class="count">{{ form_label(product.count, product.count.vars.value) }}</div>
+            <div class="btn" onclick="plus(this)" data-id="{{ product.product.id.vars.value }}">+</div>
+        </div>
+        <div class="prices">
+            <div class="amount">{{ form_label(product.product.price, (product.product.price.vars.value * product.count.vars.value)) }} руб.</div>
+            <div class="remove" onclick="removeProduct(this)" data-id="{{ product.product.id.vars.value }}"><u>Удалить</u></div>
+        </div>
+    </div>
+{% endfor %}
+<hr class="hr_cart">
+<div class="checkout">
+    <div class="total">
+        <div>
+            <div class="Subtotal">Итого:</div>
+        </div>
+        <div class="total-amount">{{ sum }} руб.</div>
+    </div>
+    {{ form_widget(form.submit, {'attr': {'class': 'button'}}) }}
+</div>
+{{ form_end(form) }}

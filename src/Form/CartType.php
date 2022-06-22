@@ -20,9 +20,13 @@ class CartType extends AbstractType
         $builder
             ->add('orderProducts', CollectionType::class, [
                 'entry_type' => OrderProductType::class,
+                'label' => false,
+                'attr' => [
+                    'class' => 'd-none'
+                ]
             ])
             ->add('submit', SubmitType::class,[
-                'label' => 'Добавить'
+                'label' => 'Заказать'
             ])
             ;
     }

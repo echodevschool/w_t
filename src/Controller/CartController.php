@@ -19,19 +19,22 @@ class CartController extends AbstractController
     #[Route('/cart', name: 'cart_page')]
     public function index(Request $request, EntityManagerInterface $entityManager)
     {
-        $order = new Order;
-        $form = $this->createForm(CartType::class, $order);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($order);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('cart_page');
+        if ($request->request->has('cart')) {
+            dd($request->request->all());
         }
+//        $order = new Order;
+//        $form = $this->createForm(CartType::class, $order);
+//        $form->handleRequest($request);
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $entityManager->persist($order);
+//            $entityManager->flush();
+//
+//            return $this->redirectToRoute('cart_page');
+//        }
 
 
         return $this->render('cart/cart.html.twig', [
-            'form' => $form->createView()
+            //'form' => $form->createView()
         ]);
     }
 
@@ -42,8 +45,10 @@ class CartController extends AbstractController
         if ($cart !== null) {
             $cart = json_decode($cart, true);
             $order = new Order();
+            $sum = 0;
             foreach ($cart as $productId => $countItem) {
                 $product = $productRepository->find($productId);
+                $sum += ($product->getPrice() * $countItem);
                 $orderProduct = new OrderProduct();
                 $orderProduct
                     ->setProduct($product)
@@ -53,7 +58,8 @@ class CartController extends AbstractController
             $form = $this->createForm(CartType::class, $order);
 
             return $this->render('cart/cart_form.html.twig', [
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'sum' => $sum
             ]);
         }
     }

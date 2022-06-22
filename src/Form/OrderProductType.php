@@ -15,9 +15,13 @@ class OrderProductType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('count', TextType::class)
+            ->add('count', TextType::class, [
+                'label' => false
+            ])
             ->add(
-                $builder->create('product', ProductType::class)
+                $builder->create('product', ProductType::class, [
+                    'label' => false
+                ])
             );
     }
 
