@@ -7,7 +7,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             let formData = new FormData();
-            formData.set('id', localStorage.getItem('cart'));
+            formData.set('cart', localStorage.getItem('cart'));
             fetch('/cart/form', {
                 method: 'POST',
                 body: formData

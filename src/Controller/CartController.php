@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 use App\Entity\Order;
+use App\Entity\OrderProduct;
 use App\Entity\Product;
 use App\Form\CartType;
 use App\Repository\OrderRepository;
@@ -37,17 +38,23 @@ class CartController extends AbstractController
     #[Route('/cart/form', name: 'cart_form')]
     public function getForm(Request $request, ProductRepository $productRepository, EntityManagerInterface $entityManager)
     {
-        //$request->query->get('id') // $_GET['id']
-        //$request->request->get('id') // $_POST['id']
-        $stringIds = $request->request->get('id');
-        if ($stringIds !== null) {
-            $ids = explode(',', $stringIds);
-            $data = $productRepository->findBy(['id' => $ids]);
-//            $data = $entityManager->getRepository(Product::class)
-//                ->createQueryBuilder('o')
-//                ->where('o.id in (:ids)')->setParameter('ids', $ids)
-//                ->getQuery()
-//                ->getResult();
+        $cart = $request->request->get('cart');
+        if ($cart !== null) {
+            $cart = json_decode($cart, true);
+            $order = new Order();
+            foreach ($cart as $productId => $countItem) {
+                $product = $productRepository->find($productId);
+                $orderProduct = new OrderProduct();
+                $orderProduct
+                    ->setProduct($product)
+                    ->setCount($countItem);
+                $order->addOrderProduct($orderProduct);
+            }
+            $form = $this->createForm(CartType::class, $order);
+
+            return $this->render('cart/cart_form.html.twig', [
+                'form' => $form->createView()
+            ]);
         }
     }
 
