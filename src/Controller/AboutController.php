@@ -18,17 +18,7 @@ use Symfony\Flex\Response;
 
 class AboutController extends AbstractController
 {
-    #[NoReturn] #[Route('/about', name: 'about_page')]
-    public function about(SystemInformationRepository $systemInformationRepository): \Symfony\Component\HttpFoundation\Response
-    {
-        $aboutUs = $systemInformationRepository->findAll();
-
-        return $this->render('about/about.html.twig', [
-            'controller_name' => 'AboutController',
-            'about' => $aboutUs
-        ]);
-    }
-
+    #[Route('/about', name: 'about_page')]
     public function aboutUs(Request $request, EntityManagerInterface $entityManager): \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
     {
         $feedback = new Feedback();
