@@ -32,8 +32,7 @@ class AboutType extends AbstractType
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Отправить',
-            ])
-        ;
+            ]);
     }
 
 
@@ -43,4 +42,21 @@ class AboutType extends AbstractType
             'data_class' => Feedback::class
         ]);
     }
+
 }
+//    $token = "5137970276:AAFUmw3IFBKcL4TvsMPY1d_4obI54s9oN_E";
+//    $chat_id = "637957661";
+//
+//    foreach ($options as $item => $value) {
+//        $txt = "<b>".$item."</b>".$value."%0A";
+//    };
+//
+//    $sendToTelegram = fopen("https://api.telegram.org/bot${$token}sendMessage?chat_id={$chat_id}
+//    &parse_mode=html&text={$txt}","r");
+//
+//if ($sendToTelegram) {
+//    echo '<h1>Спасибо за вам отзыв, надеемся он зороший :)</h1>';
+//    return true;
+//} else {
+//    return false;
+//}
