@@ -42,5 +42,6 @@ class Telegram
             'query' => $request
         ]);
         $content = $response->getBody()->getContents();
+        file_put_contents('content.txt', var_export($content, true));
     }
 }

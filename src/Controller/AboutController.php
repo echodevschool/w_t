@@ -27,7 +27,8 @@ class AboutController extends AbstractController
             $entityManager->persist($feedback);
             $entityManager->flush();
             $telegram = new Telegram($this->getParameter('telegram.token'));
-            $telegram->sendMessage('-1001542886992', $feedback->getMessage());
+            $message = 'Форма обратной связи: '.PHP_EOL.'Имя: '.$feedback->getName().PHP_EOL.'Сообщение: '.$feedback->getMessage();
+            $telegram->sendMessage('-1001542886992', $message);
 
             return $this->redirectToRoute('about_page');
         }
