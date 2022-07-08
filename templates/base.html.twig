@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}GEZZELING HOUDEN{% endblock %}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="UTF-8">
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
@@ -16,36 +16,42 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     </head>
     <body>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Главная</a>
+        <h5>Тут картинка с лого
+        </h5>
+        <div class="container">
+
+            <a class="navbar-brand" href="/">Главная</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Переключатель навигации">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">О нас</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Ссылка</a>
-                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Выпадающий список
+                            Наши продукты
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Действие</a></li>
-                            <li><a class="dropdown-item" href="#">Другое действие</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Что-то еще здесь</a></li>
+                            <li><a class="dropdown-item" href="#">Формовые свечи</a></li>
+                            <li><a class="dropdown-item" href="#">Массажные свечи</a></li>
+                            <li><a class="dropdown-item" href="#">Ароматические свечи</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Отключенная</a>
+                        <a class="nav-link" href="#">Акции</a>
+                    </li>
+                    <li class="nav-item">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{{ path('about_page') }}">О нас</a>
+                    </li>
+                        <a class="nav-link" href="#">Оплата и доставка</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Контакты</a>
                     </li>
                 </ul>
                 <form class="d-flex">
@@ -55,6 +61,39 @@
             </div>
         </div>
     </nav>
-    {% block body %}{% endblock %}
+    <button onclick="document.location='/cart'" type="button" class="btn btn-outline-dark"><i class="bi bi-bag-heart">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-heart" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5v-.5Zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0ZM14 14V5H2v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1ZM8 7.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132Z"/>
+            </svg>
+        </i></button>
     </body>
 </html>
+{% block body %}{% endblock %}
+    </body>
+    <style>
+
+        .btn-hover{min-height: 10px; width: 25px; border-radius: 50%; border: 0px; background-color: rgb(255, 200, 148); font-family: "Source Sans Pro", sans-serif; font-size: 16px;}.btn-hover:hover{}
+        .pointer {
+            cursor: pointer;
+        }
+        .btn-outline-dark {
+            position: fixed;
+            height: 50px;
+            width: 50px;
+            top: 70px;
+            right: 200px;
+            z-index: 999999;
+        }
+
+        /*div.container {*/
+        /*    height: 10em;*/
+        /*    display: flex;*/
+        /*    align-items: center;*/
+        /*    justify-content: center }*/
+        /*div.container p {*/
+        /*    margin: 0 }*/
+    </style>
+
+</html>
+
+
