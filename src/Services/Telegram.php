@@ -11,7 +11,7 @@ class Telegram
     public function sendMessage(string | int $chatId, string $text, array $additionalParams = [])
     {
         $request = [
-            'chatId' => $chatId,
+            'chat_id' => $chatId,
             'text' => $text
         ];
 
@@ -36,16 +36,11 @@ class Telegram
 
     protected function handleRequest(string $method, array $request)
     {
-        //dd($request);
         $client = new Client();
-        $url = 'https://api.telegram.org/'.$this->token.'/'.$method;
-        $client->request('GET', 'https://api.telegram.org/bot5137970276:AAFUmw3IFBKcL4TvsMPY1d_4obI54s9oN_E/sendMessage', [
+        $url = 'https://api.telegram.org/bot'.$this->token.'/'.$method;
+        $response = $client->post($url, [
             'query' => $request
         ]);
-//        $response = $client->post($url, [
-//            'query' => $request
-//        ]);
-//        $content = $response->getBody()->getContents();
-//        dd($content);
+        $content = $response->getBody()->getContents();
     }
 }
