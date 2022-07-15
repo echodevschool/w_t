@@ -36,22 +36,22 @@
                             Наши продукты
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Формовые свечи</a></li>
+                            <li><a class="dropdown-item" href="{{ path('show_product', {'id': '1'}) }}">Формовые свечи</a></li>
                             <li><a class="dropdown-item" href="#">Массажные свечи</a></li>
                             <li><a class="dropdown-item" href="#">Ароматические свечи</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Акции</a>
+                        <a class="nav-link" href="{{ path('discounts_page') }}">Акции</a>
                     </li>
                     <li class="nav-item">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{ path('about_page') }}">О нас</a>
+                        <a class="nav-link active" aria-current="page" href="/{{ path('about_page') }}">О нас</a>
                     </li>
-                        <a class="nav-link" href="#">Оплата и доставка</a>
+                        <a class="nav-link" href="{{ path('delivery_page') }}">Оплата и доставка</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Контакты</a>
+                        <a class="nav-link" href="{{ path('contacts_page') }}">Контакты</a>
                     </li>
                 </ul>
                 <form class="d-flex">
@@ -84,14 +84,6 @@
             right: 200px;
             z-index: 999999;
         }
-
-        /*div.container {*/
-        /*    height: 10em;*/
-        /*    display: flex;*/
-        /*    align-items: center;*/
-        /*    justify-content: center }*/
-        /*div.container p {*/
-        /*    margin: 0 }*/
     </style>
 
 </html>
