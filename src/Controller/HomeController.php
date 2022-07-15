@@ -13,8 +13,10 @@ class HomeController extends AbstractController
     #[Route('/', name: 'homepage')]
     public function index(ProductRepository $productRepository): Response
     {
-        $products = $productRepository->findAll();
-        foreach ($products as $product) {}
+        $products = $productRepository->createQueryBuilder('p')
+            ->setMaxResults(6)
+            ->getQuery()
+            ->getResult();
 
 
         return $this->render('home/index.html.twig', [

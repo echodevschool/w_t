@@ -1,38 +1,176 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}GEZZELING HOUDEN{% endblock %}
-
 {% block body %}
-
-{#    <button type="button" class="btn btn-outline-dark"><i class="bi bi-bag-heart">#}
-{#            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-heart" viewBox="0 0 16 16">#}
-{#                <path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5v-.5Zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0ZM14 14V5H2v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1ZM8 7.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132Z"/>#}
-{#            </svg>#}
-{#        </i></button>#}
-    <div class="container-fluid">
-        <div class="row">
-            {% for product in products %}
-            <div class="col-3 mt-3">
-                <div class="card" style="width: 18rem;">
-                    <img src="..." class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ product.name }}</h5>
-                        <p class="card-text">{{ product.description }}</p>
-                        <a href="javascript:void(0)" onclick="buy(this)" class="btn btn-primary buy-click" data-id="{{ product.id }}">Купить</a>
-                        <div class="d-none" style="display: flex">
-                            <a class="pointer">
-                                <button data-id="{{ product.id }}" onclick="minus(this)" class="btn-hover">-</button>
-                            </a>
-                            <input data-id="{{ product.id }}" oninput="onInput(this)" type="number" value="0">
-                            <a class="pointer">
-                                <button data-id="{{ product.id }}" onclick="plus(this)" class="btn-hover">+</button>
-                            </a>
-                        </div>
-                    </div>
+    <!-- Page Content -->
+    <!-- Banner Starts Here -->
+    <div class="banner header-text">
+        <div class="owl-banner owl-carousel">
+            <div class="banner-item-01">
+                <div class="text-content">
+                    <h4>Best Offer</h4>
+                    <h2>New Arrivals On Sale</h2>
                 </div>
             </div>
+            <div class="banner-item-02">
+                <div class="text-content">
+                    <h4>Flash Deals</h4>
+                    <h2>Get your best products</h2>
+                </div>
+            </div>
+            <div class="banner-item-03">
+                <div class="text-content">
+                    <h4>Last Minute</h4>
+                    <h2>Grab last minute deals</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Banner Ends Here -->
 
-            {% endfor %}
+    {#
+        В админке: добавить загрузку фото
+        добавить кнопку купить
+        добавить символ рубля
+        добавить столбец dateUpdate в таблицу product
+    #}
+    <div class="latest-products">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-heading">
+                        <h2>Новинки</h2>
+                        <a href="products.html">Посмотреть все продукты <i class="fa fa-angle-right"></i></a>
+                    </div>
+                </div>
+                {% for product in products %}
+                    <div class="col-md-4">
+                        <div class="product-item">
+                            <a href="#"><img src="https://designboom.ru/upload/iblock/139/139a970b1c1d6a1b4e220759b0a8adf5.jpeg" alt=""></a>
+                            <div class="down-content">
+                                <a href="#"><h4>{{ product.name }}</h4></a>
+                                <h6>{{ product.price }} р.</h6>
+                                <p>{{ product.description }}</p>
+{#                                <ul class="stars">#}
+{#                                    <li><i class="fa fa-star"></i></li>#}
+{#                                    <li><i class="fa fa-star"></i></li>#}
+{#                                    <li><i class="fa fa-star"></i></li>#}
+{#                                    <li><i class="fa fa-star"></i></li>#}
+{#                                    <li><i class="fa fa-star"></i></li>#}
+{#                                </ul>#}
+{#                                <span>Reviews (24)</span>#}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+{#                <div class="col-md-4">#}
+{#                    <div class="product-item">#}
+{#                        <a href="#"><img src="assets/images/product_01.jpg" alt=""></a>#}
+{#                        <div class="down-content">#}
+{#                            <a href="#"><h4>Tittle goes here</h4></a>#}
+{#                            <h6>$25.75</h6>#}
+{#                            <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>#}
+{#                            <ul class="stars">#}
+{#                                <li><i class="fa fa-star"></i></li>#}
+{#                                <li><i class="fa fa-star"></i></li>#}
+{#                                <li><i class="fa fa-star"></i></li>#}
+{#                                <li><i class="fa fa-star"></i></li>#}
+{#                                <li><i class="fa fa-star"></i></li>#}
+{#                            </ul>#}
+{#                            <span>Reviews (24)</span>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="col-md-4">#}
+{#                    <div class="product-item">#}
+{#                        <a href="#"><img src="assets/images/product_02.jpg" alt=""></a>#}
+{#                        <div class="down-content">#}
+{#                            <a href="#"><h4>Tittle goes here</h4></a>#}
+{#                            <h6>$30.25</h6>#}
+{#                            <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>#}
+{#                            <ul class="stars">#}
+{#                                <li><i class="fa fa-star"></i></li>#}
+{#                                <li><i class="fa fa-star"></i></li>#}
+{#                                <li><i class="fa fa-star"></i></li>#}
+{#                                <li><i class="fa fa-star"></i></li>#}
+{#                                <li><i class="fa fa-star"></i></li>#}
+{#                            </ul>#}
+{#                            <span>Reviews (21)</span>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="col-md-4">#}
+{#                    <div class="product-item">#}
+{#                        <a href="#"><img src="assets/images/product_03.jpg" alt=""></a>#}
+{#                        <div class="down-content">#}
+{#                            <a href="#"><h4>Tittle goes here</h4></a>#}
+{#                            <h6>$20.45</h6>#}
+{#                            <p>Sixteen Clothing is free CSS template provided by TemplateMo.</p>#}
+{#                            <ul class="stars">#}
+{#                                <li><i class="fa fa-star"></i></li>#}
+{#                                <li><i class="fa fa-star"></i></li>#}
+{#                                <li><i class="fa fa-star"></i></li>#}
+{#                                <li><i class="fa fa-star"></i></li>#}
+{#                                <li><i class="fa fa-star"></i></li>#}
+{#                            </ul>#}
+{#                            <span>Reviews (36)</span>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="col-md-4">#}
+{#                    <div class="product-item">#}
+{#                        <a href="#"><img src="assets/images/product_04.jpg" alt=""></a>#}
+{#                        <div class="down-content">#}
+{#                            <a href="#"><h4>Tittle goes here</h4></a>#}
+{#                            <h6>$15.25</h6>#}
+{#                            <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>#}
+{#                            <ul class="stars">#}
+{#                                <li><i class="fa fa-star"></i></li>#}
+{#                                <li><i class="fa fa-star"></i></li>#}
+{#                                <li><i class="fa fa-star"></i></li>#}
+{#                                <li><i class="fa fa-star"></i></li>#}
+{#                                <li><i class="fa fa-star"></i></li>#}
+{#                            </ul>#}
+{#                            <span>Reviews (48)</span>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="col-md-4">#}
+{#                    <div class="product-item">#}
+{#                        <a href="#"><img src="assets/images/product_05.jpg" alt=""></a>#}
+{#                        <div class="down-content">#}
+{#                            <a href="#"><h4>Tittle goes here</h4></a>#}
+{#                            <h6>$12.50</h6>#}
+{#                            <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>#}
+{#                            <ul class="stars">#}
+{#                                <li><i class="fa fa-star"></i></li>#}
+{#                                <li><i class="fa fa-star"></i></li>#}
+{#                                <li><i class="fa fa-star"></i></li>#}
+{#                                <li><i class="fa fa-star"></i></li>#}
+{#                                <li><i class="fa fa-star"></i></li>#}
+{#                            </ul>#}
+{#                            <span>Reviews (16)</span>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="col-md-4">#}
+{#                    <div class="product-item">#}
+{#                        <a href="#"><img src="assets/images/product_06.jpg" alt=""></a>#}
+{#                        <div class="down-content">#}
+{#                            <a href="#"><h4>Tittle goes here</h4></a>#}
+{#                            <h6>$22.50</h6>#}
+{#                            <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>#}
+{#                            <ul class="stars">#}
+{#                                <li><i class="fa fa-star"></i></li>#}
+{#                                <li><i class="fa fa-star"></i></li>#}
+{#                                <li><i class="fa fa-star"></i></li>#}
+{#                                <li><i class="fa fa-star"></i></li>#}
+{#                                <li><i class="fa fa-star"></i></li>#}
+{#                            </ul>#}
+{#                            <span>Reviews (32)</span>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+            </div>
         </div>
     </div>
 
@@ -97,19 +235,4 @@
         }
 
     </script>
-{#    <style>#}
-
-{#        .btn-hover{min-height: 10px; width: 25px; border-radius: 50%; border: 0px; background-color: rgb(255, 200, 148); font-family: "Source Sans Pro", sans-serif; font-size: 16px;}.btn-hover:hover{}#}
-{#        .pointer {#}
-{#            cursor: pointer;#}
-{#        }#}
-{#        .btn-outline-dark {#}
-{#            position: fixed;#}
-{#            height: 50px;#}
-{#            width: 50px;#}
-{#            top: 70px;#}
-{#            right: 200px;#}
-{#            z-index: 999999;#}
-{#        }#}
-{#    </style>#}
 {% endblock %}
