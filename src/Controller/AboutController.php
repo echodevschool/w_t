@@ -16,6 +16,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AboutController extends AbstractController
 {
+    /**
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @return RedirectResponse|Response
+     */
     #[Route('/about', name: 'about_page')]
     public function aboutUs(Request $request, EntityManagerInterface $entityManager): RedirectResponse|Response
     {
