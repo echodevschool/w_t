@@ -28,7 +28,7 @@ services:
         container_name: nginx_study
         image: nginx:stable-alpine
         ports:
-            - '8080:80'
+            - '80:80'
         volumes:
               - ./:/var/www/php_study
               - ./nginx/default.conf:/etc/nginx/conf.d/default.conf

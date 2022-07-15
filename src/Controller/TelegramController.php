@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Services\Telegram;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 class TelegramController extends AbstractController
@@ -11,12 +12,30 @@ class TelegramController extends AbstractController
     #[Route('/tg/wh', name: 'tg_webhook')]
     public function webhook()
     {
-        $data = json_decode(file_get_contents('php://input'), true);
-        //{"update_id":396557433,
-        //"message":{"message_id":12,"from":{"id":5231676868,"is_bot":false,"first_name":"Vladislav","username":"echo_ref","language_code":"ru"},"chat":{"id":5231676868,"first_name":"Vladislav","username":"echo_ref","type":"private"},"date":1657295244,"text":"TEST123"}}
-        $telegram = new Telegram($this->getParameter('telegram.token'));
-        $message = file_get_contents('php://input');
-        file_put_contents('message.txt', $message);
-        $telegram->sendMessage('-1001542886992', $data['message']['text'].' | '.$data['message']['chat']['id']);
+        try {
+            $data = json_decode(file_get_contents('php://input'), true);
+            //file_put_contents($this->getParameter('kernel.project_dir').'/public/request_tg.txt', $this->makeContent(var_export($data, true)), FILE_APPEND);
+            $telegram = new Telegram($this->getParameter('telegram.token'));
+            if (isset($data['message']['chat']['id']) && isset($data['message']['text'])) {
+                $text = 'don\'t know';
+                if ($data['message']['text'] === 'secret') {
+                    $text = 'Congratulations!';
+                }
+                $telegram->sendMessage($data['message']['chat']['id'], $text);
+            }
+
+            return new JsonResponse(1);
+        } catch (\Exception $exception) {
+            file_put_contents($this->getParameter('kernel.project_dir').'/public/error_tg.txt', $this->makeContent($exception->getMessage()), FILE_APPEND);
+        }
+    }
+
+    private function makeContent($data): string
+    {
+        return '============================================================'.PHP_EOL
+            .(new \DateTime())->format('d.m.Y H:i:s').PHP_EOL
+            .'============================================================'.PHP_EOL
+            .$data.PHP_EOL
+            .'============================================================'.PHP_EOL;
     }
 }
